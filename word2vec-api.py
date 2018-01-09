@@ -9,6 +9,7 @@ Example call: curl http://127.0.0.1:5000/wor2vec/n_similarity/ws1=Sushi&ws1=Shop
 from flask import Flask, request, jsonify
 from flask.ext.restful import Resource, Api, reqparse
 from gensim.models.word2vec import Word2Vec as w
+from gensim.models.word2vec import KeyedVectors as kv
 from gensim import utils, matutils
 from numpy import exp, dot, zeros, outer, random, dtype, get_include, float32 as REAL,\
      uint32, seterr, array, uint8, vstack, argsort, fromstring, sqrt, newaxis, ndarray, empty, sum as np_sum
@@ -118,7 +119,7 @@ if __name__ == '__main__':
     port = int(args.port) if args.port else 5000
     if not args.model:
         print "Usage: word2vec-apy.py --model path/to/the/model [--host host --port 1234]"
-    model = w.load_word2vec_format(model_path, binary=binary)
+    model = kv.load_word2vec_format(model_path, binary=binary)
     api.add_resource(N_Similarity, path+'/n_similarity')
     api.add_resource(Similarity, path+'/similarity')
     api.add_resource(MostSimilar, path+'/most_similar')
